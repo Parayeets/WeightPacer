@@ -21,6 +21,11 @@ public class DailyRecord {
         return newMass;
     }
 
+    // EFFECTS: Returns the newMass.
+    public void setNewMass(double newMass) {
+        this.newMass = newMass;
+    }
+
 
     // MODIFIES: this.
     // EFFECTS: Checks to see whether the user reached or equalled their desired goal.

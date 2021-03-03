@@ -2,8 +2,6 @@ package model;
 
 import java.lang.StrictMath.*;
 
-import model.Records;
-
 public class User {
     public static final double RECOMMENDED_WEIGHT_LOSS_PER_DAY = 0.285142857; //(lbs/day) and equates to ~2 lbs a week
 
