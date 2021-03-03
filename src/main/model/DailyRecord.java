@@ -31,11 +31,7 @@ public class DailyRecord {
     // EFFECTS: Checks to see whether the user reached or equalled their desired goal.
     // If so, return true. Otherwise return false.
     public Boolean reachedGoal(User mass) {
-        if (newMass <= mass.getFinalDesiredMass()) {
-            return true;
-        } else {
-            return false;
-        }
+        return newMass <= mass.getFinalDesiredMass();
     }
 
     // REQUIRES: N/A
