@@ -11,6 +11,8 @@ public class WeightPacerApp {
     private Records userRecords;
     private User user;
     private DailyRecord dailyRecord;
+    double initialMass;
+    // include name in asking questions
 
     //EFFECTS: Runs the WeightPacer App.
     public WeightPacerApp() {
@@ -76,12 +78,13 @@ public class WeightPacerApp {
     // Creates a new user, inputs initial mass in lbs and inputs final desired mass as well
     private void startUp() {
         String name = null;
-        double initialMass;
         double finalDesiredMass;
         System.out.println("To create a new WeightPacer, please insert your name");
         name = input.next();
         System.out.println("Please insert your current mass in lbs");
         initialMass = input.nextDouble();
+        DailyRecord im = new DailyRecord(initialMass);
+        userRecords.addDailyRecord(im);
         while (true) {
             System.out.println("Please insert your final desired mass in lbs");
             finalDesiredMass = input.nextDouble();
@@ -124,6 +127,7 @@ public class WeightPacerApp {
 
     private void showList() {
         ArrayList<DailyRecord> recordsList = userRecords.getRecordsList();
+        System.out.println(user.getInitialMass());
         for (DailyRecord record : recordsList) {
             System.out.println(record.getNewMass());
         }
