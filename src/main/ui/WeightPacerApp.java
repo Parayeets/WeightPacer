@@ -1,21 +1,33 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// WeightPacerApp user interface (taken inspiration from TellerApp)
+// WeightPacerApp user interface (taken inspiration from TellerApp and WorkRoom app)
 public class WeightPacerApp {
+    private static final String JSON_STORE = "./data/records.json";
     private Scanner input;
     private Records userRecords;
     private User user;
-    private DailyRecord dailyRecord;
     double initialMass;
-    // include name in asking questions
+    // include name in asking questions (do this later)
+
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     //EFFECTS: Runs the WeightPacer App.
-    public WeightPacerApp() {
+    public WeightPacerApp() throws FileNotFoundException {
+        input = new Scanner(System.in);
+        userRecords = new Records();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runWeightPacer();
     }
 
@@ -46,6 +58,8 @@ public class WeightPacerApp {
     private void userInterfaceMenu() {
         System.out.println("\nAre you ready to pace your weight loss campaign today?");
         System.out.println("\tgo   -> Let's lose some weight!");
+        System.out.println("\tsave -> save records to file");
+        System.out.println("\tload -> load records from file");
         System.out.println("\tcontinue   -> Let's continue!");
         System.out.println("\tanalytics   -> Display analytics!");
         System.out.println("\tlist   -> Show current progress!");
@@ -57,6 +71,10 @@ public class WeightPacerApp {
     private void processCommand(String command) {
         if (command.equals("go")) {
             startUp();
+        } else if (command.equals("save")) {
+            saveRecords();
+        } else if (command.equals("load")) {
+            loadRecords();
         } else if (command.equals("continue")) {
             addTodaysDailyRecord();
         } else if (command.equals("analytics")) {
@@ -75,7 +93,9 @@ public class WeightPacerApp {
         input = new Scanner(System.in);
     }
 
-    // Creates a new user, inputs initial mass in lbs and inputs final desired mass as well
+
+
+    // Creates a new user, inputs initial mass in lbs and inputs final desired mass as well.
     private void startUp() {
         String name = null;
         double finalDesiredMass;
@@ -104,6 +124,35 @@ public class WeightPacerApp {
 
     }
 
+
+
+    // EFFECTS: Saves records to file.
+    private void saveRecords() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(userRecords);
+            jsonWriter.close();
+            System.out.println("Saved " + userRecords.getRecordsList() + "to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+
+
+    // MODIFIES: This.
+    // EFFECTS: Loads records to file.
+    private void loadRecords() {
+        try {
+            userRecords = jsonReader.read();
+            System.out.println("Loaded " + userRecords.getRecordsList() + "from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+
+
     // Continues on weight loss journey by adding a new mass daily.
     private void addTodaysDailyRecord() {
         double todaysMass;
@@ -113,17 +162,21 @@ public class WeightPacerApp {
         userRecords.addDailyRecord(newDailyRecord);
     }
 
+
+
     private void currentTrajectory() {
         ArrayList<DailyRecord> recordsList = userRecords.getRecordsList();
         DailyRecord todaysTrajectory = recordsList.get(recordsList.size() - 1);
         int tj = todaysTrajectory.currentTrajectoryTowardsGoal(this.user);
-        System.out.println("Your current trajectory to reach your goal is in " + tj + " days");
         if (recordsList.get(recordsList.size() - 1).reachedGoal(this.user)) {
             System.out.println("You have reached your goal! Congratulations!");
         } else {
             System.out.println("Keep going! Remember what drives you to lose that weight!");
+            System.out.println("Your current trajectory to reach your goal is in " + tj + " days");
         }
     }
+
+
 
     private void showList() {
         ArrayList<DailyRecord> recordsList = userRecords.getRecordsList();
@@ -132,6 +185,8 @@ public class WeightPacerApp {
             System.out.println(record.getNewMass());
         }
     }
+
+
 
 
 }

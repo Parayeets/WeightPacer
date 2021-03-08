@@ -1,9 +1,13 @@
 package model;
 
-import model.User;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.lang.StrictMath.*;
 
-public class DailyRecord {
+import model.User;
+
+public class DailyRecord implements Writable {
     public static final double RECOMMENDED_WEIGHT_LOSS_PER_DAY = 0.285142857; //(lbs/day) and equates to ~2 lbs a week
 
     private double newMass; //
@@ -22,9 +26,9 @@ public class DailyRecord {
     }
 
     // EFFECTS: Returns the newMass.
-    public void setNewMass(double newMass) {
-        this.newMass = newMass;
-    }
+    // public void setNewMass(double newMass) {
+    //    this.newMass = newMass;
+    //}
 
 
     // MODIFIES: this.
@@ -41,6 +45,15 @@ public class DailyRecord {
         currentDifference = (int)Math.abs(Math.round(mass.getFinalDesiredMass() - newMass));
         trajectory = (int)Math.round(currentDifference / RECOMMENDED_WEIGHT_LOSS_PER_DAY);
         return trajectory;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("new mass", newMass);
+        json.put("current trajectory", trajectory);
+        return json;
+
     }
 
 }

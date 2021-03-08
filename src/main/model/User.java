@@ -2,7 +2,10 @@ package model;
 
 import java.lang.StrictMath.*;
 
-public class User {
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class User implements Writable {
     public static final double RECOMMENDED_WEIGHT_LOSS_PER_DAY = 0.285142857; //(lbs/day) and equates to ~2 lbs a week
 
     private String name;              // name of user doing a weight loss campaign
@@ -43,6 +46,16 @@ public class User {
         trajectory = (int)Math.round((difference / RECOMMENDED_WEIGHT_LOSS_PER_DAY));
         return trajectory;
 
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("initial mass", initialMass);
+        json.put("final desired mass", finalDesiredMass);
+        json.put("initial trajectory", trajectory);
+        return json;
     }
 
 

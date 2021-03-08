@@ -1,12 +1,17 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import model.*;
 
 
-public class Records {
+public class Records implements Writable {
 
     private final ArrayList<DailyRecord> recordsList;
+    private User user;
 
 
     // EFFECTS: Sets up a constructor called records list and has a list of daily records added.
@@ -45,6 +50,27 @@ public class Records {
     // EFFECTS: Checks to see if a record contains a certain record.
     public boolean containsRecord(DailyRecord newDailyRecord) {
         return recordsList.contains(newDailyRecord);
+    }
+
+
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("recordsList", recordsToJson());
+        return json;
+    }
+
+
+    // EFFECTS: Returns things in the Records as a JSON array.
+    public JSONArray recordsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (DailyRecord records : recordsList) {
+            jsonArray.put(records.toJson());
+        }
+
+        return jsonArray;
     }
 
 }
