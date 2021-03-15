@@ -1,6 +1,7 @@
 package model;
 
 import model.User;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,4 +59,10 @@ public class UserTest {
         assertEquals(Math.round(94 / 0.285142857), testUserThree.initialTrajectoryTowardsGoal(294.1,
                 200.0));
     }
+
+    @Test
+    void testToJson() {
+
+    }
+
 }

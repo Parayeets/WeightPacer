@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RecordsTest {
 
     private Records testRecord;
+    private User testUser;
 
     private DailyRecord testDailyRecordOne;
     private DailyRecord testDailyRecordTwo;
@@ -18,7 +19,8 @@ public class RecordsTest {
 
     @BeforeEach
     void runBefore() {
-        testRecord = new Records();
+        testUser = new User("Quinn", 120, 115);
+        testRecord = new Records(testUser);
         testDailyRecordOne = new DailyRecord(102.00);
         testDailyRecordTwo = new DailyRecord(101.00);
         testDailyRecordThree = new DailyRecord(102.50);
@@ -103,6 +105,9 @@ public class RecordsTest {
 
     }
 
+    @Test
+    void testToJSON() {
 
+    }
 
 }

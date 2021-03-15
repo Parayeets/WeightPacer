@@ -13,10 +13,10 @@ public class Records implements Writable {
     private final ArrayList<DailyRecord> recordsList;
     private User user;
 
-
     // EFFECTS: Sets up a constructor called records list and has a list of daily records added.
-    public Records() {
+    public Records(User user) {
         this.recordsList = new ArrayList<>();
+        this.user = user;
 
     }
 
@@ -47,6 +47,11 @@ public class Records implements Writable {
         return recordsList.size();
     }
 
+    // EFFECTS: Gets the user.
+    public User getUser() {
+        return user;
+    }
+
     // EFFECTS: Checks to see if a record contains a certain record.
     public boolean containsRecord(DailyRecord newDailyRecord) {
         return recordsList.contains(newDailyRecord);
@@ -57,6 +62,7 @@ public class Records implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
+        json.put("initialUserInformation", user.toJson());
         json.put("recordsList", recordsToJson());
         return json;
     }
@@ -75,5 +81,3 @@ public class Records implements Writable {
 
 }
 
-
-// Initial mass to be in first element of list --> worry about that in the ui

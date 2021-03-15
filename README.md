@@ -43,6 +43,8 @@ the bold and italic fonts correctly but they will appear correctly on GitHub.
 - As a user, I want to have an option to delete my campaign after I met my goal. (not yet done)
 - As a user, I want to be able to see my list of masses. 
 - As a user, I want to be able to see my analytics. 
+- As a user, I want to save my records.
+- As a user, I want to load my records.
 
 // (first focus on how everything works then include people)
 // class called daily record --> has weight, day, etc. 

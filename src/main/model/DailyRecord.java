@@ -25,12 +25,6 @@ public class DailyRecord implements Writable {
         return newMass;
     }
 
-    // EFFECTS: Returns the newMass.
-    // public void setNewMass(double newMass) {
-    //    this.newMass = newMass;
-    //}
-
-
     // MODIFIES: this.
     // EFFECTS: Checks to see whether the user reached or equalled their desired goal.
     // If so, return true. Otherwise return false.
@@ -51,7 +45,6 @@ public class DailyRecord implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("new mass", newMass);
-        json.put("current trajectory", trajectory);
         return json;
 
     }

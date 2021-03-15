@@ -6,8 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonTest {
 
-    protected void checkDailyRecord(DailyRecord dailyRecord, Double mass, int trajectory, User user) {
-        assertEquals(dailyRecord.currentTrajectoryTowardsGoal(user), trajectory);
+    protected void checkDailyRecord(DailyRecord dailyRecord, Double mass) {
         assertEquals(dailyRecord.getNewMass(), mass);
 
     }

@@ -1,0 +1,12 @@
+{
+  "initialUserInformation": {
+    "initial trajectory": 0,
+    "final desired mass": 100,
+    "name": "Navid",
+    "initial mass": 200
+  },
+  "recordsList": [
+    {"new mass": 190},
+    {"new mass": 180}
+  ]
+}

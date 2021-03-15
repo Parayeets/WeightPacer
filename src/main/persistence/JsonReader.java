@@ -23,12 +23,14 @@ public class JsonReader {
         this.source = source;
     }
 
+    // EFFECTS: Creates a read method that allows data to be parsed.
     public Records read() throws IOException {
         String jsonData = readFile(source);
-        JSONObject jsonObject = new JSONObject((jsonData));
+        JSONObject jsonObject = new JSONObject(jsonData);
         return parseRecords(jsonObject);
     }
 
+    // EFFECTS: Reads the source file.
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
@@ -39,36 +41,32 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // EFFECTS: Parses the initial user information and records to then load.
     private Records parseRecords(JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
-        Double initialMass = jsonObject.getDouble("initial mass");
-        Double finalDesiredMass = jsonObject.getDouble("final desired mass");
+        JSONObject userinfo = jsonObject.getJSONObject("initialUserInformation");
+        String name = userinfo.getString("name");
+        Double initialMass = userinfo.getDouble("initial mass");
+        Double finalDesiredMass = userinfo.getDouble("final desired mass");
+        //int initialTrajectory = userinfo.getInt("initial trajectory");
 
         User newUser = new User(name, initialMass, finalDesiredMass);
+        newUser.initialTrajectoryTowardsGoal(initialMass, finalDesiredMass);
 
-        Records r = new Records();
-        addDailyRecords(r, jsonObject);
+        Records r = new Records(newUser);
+        JSONArray recordsInfo = jsonObject.getJSONArray("recordsList");
+        for (Object recordObject : recordsInfo) {
+            addDailyRecord(r, (JSONObject) recordObject, newUser);
+        }
         return r;
     }
 
-    private void addDailyRecords(Records r, JSONObject jsonObject) {
-        //Double newMass = new Double();
-        JSONArray jsonArray = jsonObject.getJSONArray("mass");
-        for (Object json : jsonArray) {
-            JSONObject nextDailyRecord = (JSONObject) json;
-            addDailyRecord(r, nextDailyRecord);
-        }
-    }
-
-    private void addDailyRecord(Records r, JSONObject jsonObject) {
-        Double mass = jsonObject.getDouble("new mass");
-        //int trajectory = jsonObject.getInt("current trajectory");
-        DailyRecord dailyRecord = new DailyRecord(mass);
+    // EFFECTS: Includes new elements that parseRecords can parse and then be able to load.
+    private void addDailyRecord(Records r, JSONObject recordObject, User user) {
+        Double newMass = recordObject.getDouble("new mass");
+        //int trajectory = recordObject.getInt("current trajectory");
+        DailyRecord dailyRecord = new DailyRecord(newMass);
+        dailyRecord.currentTrajectoryTowardsGoal(user);
         r.addDailyRecord(dailyRecord);
-
     }
-
-
-
 
 }

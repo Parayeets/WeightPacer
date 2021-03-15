@@ -25,7 +25,7 @@ public class WeightPacerApp {
     //EFFECTS: Runs the WeightPacer App.
     public WeightPacerApp() throws FileNotFoundException {
         input = new Scanner(System.in);
-        userRecords = new Records();
+        userRecords = new Records(this.user);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         runWeightPacer();
@@ -89,7 +89,7 @@ public class WeightPacerApp {
     // MODIFIES: this
     // EFFECTS: initializes accounts
     private void init() {
-        userRecords = new Records();
+        userRecords = new Records(this.user);
         input = new Scanner(System.in);
     }
 
@@ -115,7 +115,7 @@ public class WeightPacerApp {
             }
         }
         this.user = new User(name, initialMass, finalDesiredMass);
-        this.userRecords = new Records();
+        this.userRecords = new Records(this.user);
 
         System.out.println("Using your given data, according to health experts, it is recommended"
                 + " to lose only 2 lbs a week. Given those calculations, your approximate trajectory to"
@@ -145,6 +145,7 @@ public class WeightPacerApp {
     private void loadRecords() {
         try {
             userRecords = jsonReader.read();
+            user = userRecords.getUser();
             System.out.println("Loaded " + userRecords.getRecordsList() + "from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
@@ -166,6 +167,10 @@ public class WeightPacerApp {
 
     private void currentTrajectory() {
         ArrayList<DailyRecord> recordsList = userRecords.getRecordsList();
+        if (recordsList.size() == 0) {
+            System.out.println("You aren't able to get your trajectory. Your list of records are empty!");
+            return;
+        }
         DailyRecord todaysTrajectory = recordsList.get(recordsList.size() - 1);
         int tj = todaysTrajectory.currentTrajectoryTowardsGoal(this.user);
         if (recordsList.get(recordsList.size() - 1).reachedGoal(this.user)) {
@@ -180,6 +185,10 @@ public class WeightPacerApp {
 
     private void showList() {
         ArrayList<DailyRecord> recordsList = userRecords.getRecordsList();
+        if (recordsList.size() == 0) {
+            System.out.println("There's nothing in your list.");
+            return;
+        }
         System.out.println(user.getInitialMass());
         for (DailyRecord record : recordsList) {
             System.out.println(record.getNewMass());

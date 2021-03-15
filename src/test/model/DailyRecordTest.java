@@ -1,6 +1,7 @@
 package model;
 
 import model.DailyRecord;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -70,6 +71,16 @@ class DailyRecordTest {
     @Test
     void testTwoCurrentTrajectoryTowardsGoal() {
         assertEquals(Math.round(55 / 0.285142857), testDailyRecordOne.currentTrajectoryTowardsGoal(testUser));
+
+    }
+
+    @Test
+    void testToJson() {
+        JSONObject json = testDailyRecordOne.toJson();
+        //JSONObject jsonTwo = testUserTwo.toJson();
+        assertEquals(json.get("new mass"), testDailyRecordOne.getNewMass());
+        //assertEquals(jsonTwo.get("current trajectory"), testDailyRecordOne.currentTrajectoryTowardsGoal(testUserTwo));
+
 
     }
 
