@@ -62,6 +62,12 @@ public class UserTest {
 
     @Test
     void testToJson() {
+        JSONObject json = testUser.toJson();
+        assertEquals(json.get("name"), testUser.getName());
+        assertEquals(json.get("initial mass"), testUser.getInitialMass());
+        assertEquals(json.get("final desired mass"), testUser.getFinalDesiredMass());
+        //assertEquals(json.get("initial trajectory"), testUser.initialTrajectoryTowardsGoal(
+        //        testUser.getInitialMass(), testUser.getFinalDesiredMass()));
 
     }
 

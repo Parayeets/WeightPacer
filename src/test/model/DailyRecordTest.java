@@ -77,9 +77,7 @@ class DailyRecordTest {
     @Test
     void testToJson() {
         JSONObject json = testDailyRecordOne.toJson();
-        //JSONObject jsonTwo = testUserTwo.toJson();
         assertEquals(json.get("new mass"), testDailyRecordOne.getNewMass());
-        //assertEquals(jsonTwo.get("current trajectory"), testDailyRecordOne.currentTrajectoryTowardsGoal(testUserTwo));
 
 
     }

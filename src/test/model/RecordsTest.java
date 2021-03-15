@@ -1,6 +1,8 @@
 package model;
 
 import model.Records;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -106,8 +108,16 @@ public class RecordsTest {
     }
 
     @Test
-    void testToJSON() {
-
+    void testToJson() {
+        JSONObject json = testUser.toJson();
+        //assertEquals(json.get("initialUserInformation"), testUser.toJson());
+        //assertEquals(json.get("recordsList"), testRecord.getRecordsList());
     }
+
+    @Test
+    void testRecordsToJson() {
+        JSONArray json = testRecord.recordsToJson();
+    }
+
 
 }
