@@ -120,7 +120,7 @@ public class WeightPacerApp {
         System.out.println("Using your given data, according to health experts, it is recommended"
                 + " to lose only 2 lbs a week. Given those calculations, your approximate trajectory to"
                 + " meet your goal is in " + user.initialTrajectoryTowardsGoal(user.getInitialMass(),
-                user.getFinalDesiredMass()) + " days");
+                user.getFinalDesiredMass()) + " days.");
 
     }
 
@@ -154,7 +154,7 @@ public class WeightPacerApp {
 
 
 
-    // Continues on weight loss journey by adding a new mass daily.
+    // EFFECTS: Continues on weight loss journey by adding a new mass daily.
     private void addTodaysDailyRecord() {
         double todaysMass;
         System.out.println("Hello again, continue your weight loss journey by inputting your today's weight");
@@ -163,8 +163,9 @@ public class WeightPacerApp {
         userRecords.addDailyRecord(newDailyRecord);
     }
 
-
-
+    // MODIFIES: This.
+    // EFFECTS: Tells you your trajectory in days given your most recent weight input
+    //          and also determines if you've made your goal or not.
     private void currentTrajectory() {
         ArrayList<DailyRecord> recordsList = userRecords.getRecordsList();
         if (recordsList.size() == 0) {
@@ -182,11 +183,11 @@ public class WeightPacerApp {
     }
 
 
-
+    // EFFECTS: Shows the list of records.
     private void showList() {
         ArrayList<DailyRecord> recordsList = userRecords.getRecordsList();
         if (recordsList.size() == 0) {
-            System.out.println("There's nothing in your list.");
+            System.out.println(initialMass);
             return;
         }
         System.out.println(user.getInitialMass());
