@@ -16,7 +16,7 @@ import ui.compartments.*;
 // TODO: Took inspiration from Alex Lee's YouTube tutorial on a GUI.
 // TODO: Took inspiration from
 //  https://stackoverflow.com/questions/22933507/how-can-i-place-buttons-in-the-center-of-the-frame-in-a-vertical-line
-public class GUI extends JFrame implements ActionListener {
+public class GUI extends JFrame {
 
     JTextArea welcomeText;
     JButton newWeightPacer;
@@ -29,19 +29,20 @@ public class GUI extends JFrame implements ActionListener {
     private static final String JSON_STORE = "./data/records.json";
     GridBagConstraints gbc = new GridBagConstraints();
 
-    private Records userRecords;
-    private User user;
+    private static Records userRecords;
+    private static User user;
     double initialMass;
 
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    JPanel panel = new JPanel();
+    JPanel panel;
 
     public GUI() {
         init();
 
         this.setMinimumSize(new Dimension(500, 500));
+        panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -56,7 +57,6 @@ public class GUI extends JFrame implements ActionListener {
         // Instead of instantiating a new JFrame, just have the GUI extend JFrame
         // and use "this" to refer to JFrame instead. It's cleaner and reduces clutter.
 
-        IntroSound.introSound();
 
         setItems(); //initialize the buttons
 
@@ -70,6 +70,22 @@ public class GUI extends JFrame implements ActionListener {
         userRecords = new Records(user);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+    }
+
+    public static void setUserRecords(Records records) {
+        GUI.userRecords = records;
+    }
+
+    public static Records getUserRecords() {
+        return GUI.userRecords;
+    }
+
+    public static void setUser(User user) {
+        GUI.user = user;
+    }
+
+    public static User getUser() {
+        return GUI.user;
     }
 
     // MODIFIES: This.
@@ -96,18 +112,49 @@ public class GUI extends JFrame implements ActionListener {
     // MODIFIES: This.
     // EFFECTS: Creates ActionListeners for every option chosen by the user in the menu.
     private void setAction() {
-        newWeightPacer.addActionListener(this);
-        saveProgress.addActionListener(this);
-        loadProgress.addActionListener(this);
-        continueWeightPacer.addActionListener(this);
-        analytics.addActionListener(this);
-        showProgress.addActionListener(this);
+        newWeightPacer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CreateProfile();
+            }
+        });
+
+        saveProgress.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveRecords();
+            }
+        });
+        loadProgress.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadRecords();
+            }
+        });
+        continueWeightPacer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ContinueWeightPacer();
+            }
+        });
+        analytics.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Analytics();
+            }
+        });
+        showProgress.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ShowProgress();
+            }
+        });
 
     }
 
     // MODIFIES: This.
     // EFFECTS: Performs the option that is selected by the user.
-    public void actionPerformed(ActionEvent e) {
+    /*public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newWeightPacer) {
             new CreateProfile();
         } else if (e.getSource() == saveProgress) {
@@ -121,7 +168,7 @@ public class GUI extends JFrame implements ActionListener {
         } else if (e.getSource() == showProgress) {
             //create new class that returns list of records
         }
-    }
+    }*/
 
     // MODIFIES: This.
     // EFFECTS: Saves the records into "./data/records.json" (JSON_STORE).

@@ -14,12 +14,13 @@ public class ContinueWeightPacer extends JFrame implements ActionListener {
     Records recordsList;
     Double newMass;
     User newUser;
+    Integer result;
 
     JPanel panel = new JPanel();
     GridBagConstraints gbc = new GridBagConstraints();
 
     public ContinueWeightPacer() {
-        this.setMinimumSize(new Dimension(500, 500));
+        /*this.setMinimumSize(new Dimension(500, 500));
         panel.setLayout(new GridBagLayout());
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -29,7 +30,7 @@ public class ContinueWeightPacer extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Continue WeightPacer");
         this.pack();
-        this.setVisible(true);
+        this.setVisible(true);*/
 
         setItems();
 
@@ -42,7 +43,24 @@ public class ContinueWeightPacer extends JFrame implements ActionListener {
     private void setItems() {
         instructionsText = new JTextArea("Welcome back " + newUser.getName()
                 + ", continue your weight loss journey by inputting today's weight (lbs): ");
+
+        JTextField newMass = new JTextField(10);
+
+        panel = new JPanel();
         panel.add(instructionsText);
+        instructionsText.setEditable(false);
+        panel.add(new JLabel("New Mass (lbs)"));
+        panel.add(newMass);
+
+        /*this.result = JOptionPane.showConfirmDialog(null, panel,
+                "Continue Weight Pacer", JOptionPane.OK_CANCEL_OPTION);
+        if (this.result == JOptionPane.OK_OPTION) {
+            this.newMass =  Double.parseDouble(newMass.getText());
+            gui.setUser(new User(userName, initialMass, finalDesiredMass));
+            newUser = gui.getUser();
+            gui.setUserRecords(new Records(newUser));
+            userRecords = gui.getUserRecords();
+        }*/
     }
 
     private void inputNewMass() {
