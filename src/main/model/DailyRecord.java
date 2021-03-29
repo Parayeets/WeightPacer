@@ -35,8 +35,8 @@ public class DailyRecord implements Writable {
     // REQUIRES: N/A
     // MODIFIES: newMass, finalDesiredMass
     // EFFECTS: Give the trajectory in days that it will take for one to reach their weight goals
-    public int currentTrajectoryTowardsGoal(User mass) {
-        currentDifference = (int)Math.abs(Math.round(mass.getFinalDesiredMass() - newMass));
+    public int currentTrajectoryTowardsGoal(User user) {
+        currentDifference = (int)Math.abs(Math.round(user.getFinalDesiredMass() - newMass));
         trajectory = (int)Math.round(currentDifference / RECOMMENDED_WEIGHT_LOSS_PER_DAY);
         return trajectory;
     }

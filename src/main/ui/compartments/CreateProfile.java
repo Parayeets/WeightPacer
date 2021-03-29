@@ -5,10 +5,6 @@ import javax.swing.*;
 import model.*;
 import ui.GUI;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 // TODO: Took inspiration from the https://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html tutorial
 //  as well as https://docs.oracle.com/javase/tutorial/uiswing/layout/spring.html tutorial.
 public class CreateProfile extends JFrame {
@@ -16,13 +12,18 @@ public class CreateProfile extends JFrame {
 
     JTextArea instructionsText = new JTextArea("Great to have you with us!\nInsert your name, "
                                                     + "current weight, and your final goal (in pounds).");
+    JTextField name;
+    JTextField initial;
+    JTextField goal;
+
     private User newUser;
     private Records userRecords;
     private String userName;
     private Double initialMass;
     private Double finalDesiredMass;
-    // private GUI gui;
+
     private Integer result;
+
     private JPanel panel;
 
     //JPanel topPanel = new JPanel(new GridLayout(3, 1));
@@ -32,45 +33,19 @@ public class CreateProfile extends JFrame {
     // EFFECTS: Constructs a new profile environment for the user to put in their information.
     public CreateProfile() {
         panel = new JPanel();
-        //gui = new GUI();
 
-        //this.setMinimumSize(new Dimension(500, 500));
-        //gbcOne.fill = GridBagConstraints.HORIZONTAL;
+        initItems(); //initializes the main popup for creating a profile
 
-        //this.add(topPanel, BorderLayout.NORTH);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setTitle("Create a Profile of Yourself!");
-        //this.pack();
-        //this.setVisible(true);
+        setItems();  //sets up new values that goes within the popup when creating a profile
 
-
-        setItems(); //initializes the 3 blanks that need to be filled as well as the instructions
-        //setButton(); //initializes the button
-        //setAction(); //adds the ActionListener
-
-        //inputInfo();
     }
 
-    private void setItems() {
-        /* // Code below taken straight from the SpringLayout Tutorial as it's exactly what I need
-        String[] labels = {"Name: ", "Initial Mass (lbs): ", "Goal (lbs): "};
-        int numPairs = labels.length;
-        this.middlePanel = new JPanel(new SpringLayout());
-        for (int i = 0; i < numPairs; i++) {
-            JLabel l = new JLabel(labels[i], JLabel.TRAILING);
-            middlePanel.add(l);
-            JTextField textField = new JTextField(10);
-            l.setLabelFor(textField);
-            middlePanel.add(textField);
-
-            //SpringUtilities.makeCompactGrid(middlePanel, numPairs, 1, 6, 6, 6, 6);
-
-        }
-        topPanel.add(middlePanel); */
-        JTextField name = new JTextField(20);
-        JTextField initial = new JTextField(10);
-        JTextField goal = new JTextField(10);
-        // init()
+    // EFFECTS: Initializes three JTextFields (and created labels accordingly) to put values in.
+    //          It initializes a name, initial mass, and a goal.
+    private void initItems() {
+        name = new JTextField(20);
+        initial = new JTextField(10);
+        goal = new JTextField(10);
 
         panel = new JPanel();
         panel.add(instructionsText);
@@ -83,8 +58,11 @@ public class CreateProfile extends JFrame {
         panel.add(new JLabel("Goal (lbs)"));
         panel.add(Box.createHorizontalStrut(5));
         panel.add(goal);
-        // add components to panel ()
+    }
 
+    // MODIFIES: This.
+    // EFFECTS: Takes the user input and sets the name, initial mass and goal to those inputs.
+    private void setItems() {
         this.result = JOptionPane.showConfirmDialog(null, panel,
                 "Create Your Own Weight Loss Profile", JOptionPane.OK_CANCEL_OPTION);
         if (this.result == JOptionPane.OK_OPTION) {
@@ -102,44 +80,6 @@ public class CreateProfile extends JFrame {
         }
 
     }
-
-
-    // MODIFIES: This.
-    // EFFECTS: Displays the confirm button at the bottom right of the page.
-    /*private void setButton() {
-        confirmButton = new JButton("Confirm Inputs");
-
-        // Code below taken straight from the GridBag Tutorial as it's exactly what I need
-        GridBagConstraints gbcTwo = new GridBagConstraints();
-        gbcTwo.fill = GridBagConstraints.HORIZONTAL;
-        gbcTwo.ipady = 0;       //reset to default
-        gbcTwo.weighty = 1.0;   //request any extra vertical space
-        gbcTwo.anchor = GridBagConstraints.PAGE_END; //bottom of space
-        gbcTwo.insets = new Insets(10,0,0,0);  //top padding
-        gbcTwo.gridx = 1;       //aligned with button 2
-        gbcTwo.gridwidth = 2;   //2 columns wide
-        gbcTwo.gridy = 2;       //third row
-
-        topPanel.add(bottomPanel);
-        bottomPanel.add(confirmButton, gbcTwo);
-    }*/
-
-
-    // MODIFIES: This.
-    // EFFECTS: Constructs an ActionListener for confirmButton at the bottom right corner of the window.
-    private void setAction() {
-
-//        confirmButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                actionPerformed(e);
-//            }
-//        });
-    }
-
-    /*private void inputInfo() {
-
-    }*/
 
     // MODIFIES: This.
     // EFFECTS: Performs either two pop-ups. One is if the goal is greater than the initial mass then

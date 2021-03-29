@@ -1,81 +1,61 @@
 package ui.compartments;
 
 import model.*;
+import ui.GUI;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ContinueWeightPacer extends JFrame implements ActionListener {
+public class ContinueWeightPacer extends JFrame {
 
-    JTextArea instructionsText;
-    JButton inputNewMassButton;
-    Records recordsList;
-    Double newMass;
-    User newUser;
-    Integer result;
+    private JTextField newMassInput;
 
-    JPanel panel = new JPanel();
-    GridBagConstraints gbc = new GridBagConstraints();
+    JPanel panel;
 
+    // EFFECTS: Constructs a ContinueWeightPacer panel that produces
+    // a popup where one can add their current weight to their Records.
     public ContinueWeightPacer() {
-        /*this.setMinimumSize(new Dimension(500, 500));
-        panel.setLayout(new GridBagLayout());
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel.setMinimumSize(new Dimension(500, 500));
+        panel = new JPanel();
+        initItems();
 
-        this.add(panel, BorderLayout.CENTER);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle("Continue WeightPacer");
-        this.pack();
-        this.setVisible(true);*/
-
-        setItems();
-
-        inputNewMass();
-
-        inputNewMassButton();
-
+        setNewMass();
     }
 
-    private void setItems() {
-        instructionsText = new JTextArea("Welcome back " + newUser.getName()
-                + ", continue your weight loss journey by inputting today's weight (lbs): ");
+    // EFFECTS: Initializes the popup for adding a new mass to the Records.
+    private void initItems() {
+        //newUser = GUI.getUser().getName();
+        JTextArea instructionsText = new JTextArea("Welcome back,\n"
+                + "continue your weight loss journey\nby inputting today's weight (lbs): ");
 
-        JTextField newMass = new JTextField(10);
+        newMassInput = new JTextField(10);
 
         panel = new JPanel();
         panel.add(instructionsText);
         instructionsText.setEditable(false);
         panel.add(new JLabel("New Mass (lbs)"));
-        panel.add(newMass);
+        panel.add(newMassInput);
+    }
 
-        /*this.result = JOptionPane.showConfirmDialog(null, panel,
+    // MODIFIES: This.
+    // EFFECTS: User sets their mass in pounds within the JTextField and then adds that
+    // mass to the Records with the list of masses.
+    private void setNewMass() {
+        int result = JOptionPane.showConfirmDialog(this, panel,
                 "Continue Weight Pacer", JOptionPane.OK_CANCEL_OPTION);
-        if (this.result == JOptionPane.OK_OPTION) {
-            this.newMass =  Double.parseDouble(newMass.getText());
-            gui.setUser(new User(userName, initialMass, finalDesiredMass));
-            newUser = gui.getUser();
-            gui.setUserRecords(new Records(newUser));
-            userRecords = gui.getUserRecords();
-        }*/
-    }
+        if (result == JOptionPane.OK_OPTION) {
+            double newMass = Double.parseDouble(newMassInput.getText());
+            Records userRecords = GUI.getUserRecords();
+            DailyRecord dailyRecord = new DailyRecord(newMass);
+            userRecords.addDailyRecord(dailyRecord);
 
-    private void inputNewMass() {
-        JTextField newMassInput = new JTextField();
-    }
-
-    private void inputNewMassButton() {
-        inputNewMassButton = new JButton("Add Today's Mass");
-        panel.add(inputNewMassButton);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == inputNewMassButton) {
-            DailyRecord newDailyRecord = new DailyRecord(newMass);
-            recordsList.addDailyRecord(newDailyRecord);
+            confirmNewMassInput();
         }
+    }
+
+    // EFFECTS: Shows a confirmation dialog that the user has successfully added their mass to the Records.
+    public void confirmNewMassInput() {
+        JOptionPane.showMessageDialog(this,
+                    "Successfully added today's mass to your\n"
+                            + "current progress list.");
+
     }
 }
