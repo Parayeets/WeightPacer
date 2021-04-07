@@ -1,6 +1,7 @@
 package persistence;
 
 import model.DailyRecord;
+import model.IncorrectInputException;
 import model.Records;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class JsonReader {
     }
 
     // EFFECTS: Creates a read method that allows data to be parsed.
-    public Records read() throws IOException {
+    public Records read() throws IOException, IncorrectInputException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseRecords(jsonObject);
@@ -41,13 +42,15 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+
     // EFFECTS: Parses the initial user information and records to then load.
-    private Records parseRecords(JSONObject jsonObject) {
+    private Records parseRecords(JSONObject jsonObject) throws IncorrectInputException {
         JSONObject userinfo = jsonObject.getJSONObject("initialUserInformation");
         String name = userinfo.getString("name");
         Double initialMass = userinfo.getDouble("initial mass");
         Double finalDesiredMass = userinfo.getDouble("final desired mass");
         //int initialTrajectory = userinfo.getInt("initial trajectory");
+
 
         User newUser = new User(name, initialMass, finalDesiredMass);
         newUser.initialTrajectoryTowardsGoal(initialMass, finalDesiredMass);
@@ -58,6 +61,16 @@ public class JsonReader {
             addDailyRecord(r, (JSONObject) recordObject, newUser);
         }
         return r;
+
+//        User newUser = new User(name, initialMass, finalDesiredMass);
+//        newUser.initialTrajectoryTowardsGoal(initialMass, finalDesiredMass);
+//
+//        Records r = new Records(newUser);
+//        JSONArray recordsInfo = jsonObject.getJSONArray("recordsList");
+//        for (Object recordObject : recordsInfo) {
+//            addDailyRecord(r, (JSONObject) recordObject, newUser);
+//        }
+//        return r;
     }
 
     // EFFECTS: Includes new elements that parseRecords can parse and then be able to load.

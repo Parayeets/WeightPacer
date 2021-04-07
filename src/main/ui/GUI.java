@@ -64,7 +64,11 @@ public class GUI extends JFrame {
     }
 
     private void init() {
-        user = new User("Guest", 0, 0);
+        try {
+            user = new User("Guest", 1, 0);
+        } catch (IncorrectInputException e) {
+            System.exit(-1);
+        }
         userRecords = new Records(user);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -219,6 +223,9 @@ public class GUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Unable to read file: " + JSON_STORE,
                     "Inane Error", JOptionPane.ERROR_MESSAGE);
             //System.out.println("Unable to read from file: " + JSON_STORE);
+        } catch (IncorrectInputException exception) {
+            JOptionPane.showMessageDialog(this, "Unable to create user because "
+                    + "incorrect inputs.");
         }
     }
 

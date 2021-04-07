@@ -14,10 +14,11 @@ public class UserTest {
     private User testUserThree;
 
     @BeforeEach
-    void runBefore() {
+    void runBefore() throws IncorrectInputException {
         testUser = new User("Samantha", 165.0, 145.0);
         testUserTwo = new User("Navid", 210.0, 177.5);
         testUserThree = new User("Rohan", 294.1, 200.0);
+
     }
 
     // Test to ensure whether the given name, initial mass and final desired mass are equal to each other

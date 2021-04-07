@@ -18,11 +18,19 @@ public class User implements Writable {
     // REQUIRES: personName is a non-zero length and
     //           finalDesiredMass needs to be lower than initialMass
     // EFFECTS: Sets up a user's information containing their name, their initial mass in pounds
-    public User(String personName, double initialMass, double finalDesiredMass) {
+    public User(String personName, double initialMass, double finalDesiredMass) throws IncorrectInputException {
         name = personName;
-        this.initialMass = initialMass;
-        this.finalDesiredMass = finalDesiredMass;
+        if (finalDesiredMass >= initialMass) {
+            throw new IncorrectInputException();
+            // you could write it in here or you can do it overall, if you're reusing it, write it here,
+            // if not, write it in general exception class
+        } else if (initialMass > finalDesiredMass) {
+            this.initialMass = initialMass;
+            this.finalDesiredMass = finalDesiredMass;
+        }
+        // no need to use try/catch because you're not using a method that throws an exception
     }
+    // we do try/catch for checked exceptions only (we can do for unchecked exceptions, but not required to)
 
     // EFFECTS: Returns name.
     public String getName() {

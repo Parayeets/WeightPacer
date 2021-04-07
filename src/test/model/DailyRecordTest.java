@@ -18,7 +18,7 @@ class DailyRecordTest {
     private User testUserThree;
 
     @BeforeEach
-    void runBefore() {
+    void runBefore() throws IncorrectInputException {
         testDailyRecordOne = new DailyRecord(200.0);
         testDailyRecordTwo = new DailyRecord(105.0);
         testDailyRecordThree = new DailyRecord(162.3);

@@ -14,7 +14,7 @@ public class JsonWriterTest extends JsonTest {
     private User testUser;
 
     @BeforeEach
-    void runBefore() {
+    void runBefore() throws IncorrectInputException {
         testUser = new User("Navid", 200.00, 100.00);
 
     }
@@ -46,6 +46,8 @@ public class JsonWriterTest extends JsonTest {
             assertEquals(r.getSize(), 0);
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (IncorrectInputException e) {
+            fail("Exception should not have been thrown");
         }
     }
 
@@ -68,6 +70,8 @@ public class JsonWriterTest extends JsonTest {
             checkDailyRecord(dailyRecords.get(1), 180.00);
 
         } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        } catch (IncorrectInputException e) {
             fail("Exception should not have been thrown");
         }
     }

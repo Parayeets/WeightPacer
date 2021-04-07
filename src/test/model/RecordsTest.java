@@ -20,7 +20,7 @@ public class RecordsTest {
     private DailyRecord testDailyRecordThree;
 
     @BeforeEach
-    void runBefore() {
+    void runBefore() throws IncorrectInputException {
         testUser = new User("Quinn", 120, 115);
         testRecord = new Records(testUser);
         testDailyRecordOne = new DailyRecord(102.00);

@@ -14,9 +14,8 @@ public class JsonReaderTest extends JsonTest {
     User testUser;
 
     @BeforeEach
-    void runBefore() {
+    void runBefore() throws IncorrectInputException {
         testUser = new User("Navid", 200.00, 100.00);
-
     }
 
     @Test
@@ -27,6 +26,8 @@ public class JsonReaderTest extends JsonTest {
             fail("IOException expected");
         } catch (IOException e) {
             // pass
+        } catch (IncorrectInputException e) {
+            fail("Does not have incorrect inputs");
         }
     }
 
@@ -38,6 +39,21 @@ public class JsonReaderTest extends JsonTest {
             assertEquals(0, r.getSize());
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (IncorrectInputException e) {
+            fail("Does not have incorrect inputs");
+        }
+    }
+
+    @Test
+    void testReaderEmptyRecordsWithException() {
+        JsonReader reader = new JsonReader("./data/testReaderEmptyRecordsWithException.json");
+        try {
+            Records r = reader.read();
+            assertEquals(0, r.getSize());
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        } catch (IncorrectInputException e) {
+            //pass
         }
     }
 
@@ -52,6 +68,8 @@ public class JsonReaderTest extends JsonTest {
             checkDailyRecord(dailyRecords.get(1), 180.00);
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (IncorrectInputException e) {
+            fail("Does not have incorrect inputs");
         }
     }
 }

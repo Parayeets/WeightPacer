@@ -22,6 +22,8 @@ public class CreateProfile extends JFrame {
     private Double initialMass;
     private Double finalDesiredMass;
 
+    private User guestUser;
+
     private Integer result;
 
     private JPanel panel;
@@ -63,35 +65,44 @@ public class CreateProfile extends JFrame {
     // MODIFIES: This.
     // EFFECTS: Takes the user input and sets the name, initial mass and goal to those inputs.
     private void setItems() {
-        this.result = JOptionPane.showConfirmDialog(null, panel,
-                "Create Your Own Weight Loss Profile", JOptionPane.OK_CANCEL_OPTION);
-        if (this.result == JOptionPane.OK_OPTION) {
-            userName =  name.getText();
-            initialMass = Double.parseDouble(initial.getText());
-            finalDesiredMass = Double.parseDouble(goal.getText());
-            GUI.setUser(new User(userName, initialMass, finalDesiredMass));
-
-            newUser = GUI.getUser();
-            Records record = new Records((newUser));
-            record.addDailyRecord(new DailyRecord(initialMass));
-            GUI.setUserRecords(record);
-            userRecords = GUI.getUserRecords();
-            actionPerformed();
+        guestUser = GUI.getUser();
+        while (GUI.getUser() == guestUser) {
+            this.result = JOptionPane.showConfirmDialog(null, panel,
+                    "Create Your Own Weight Loss Profile", JOptionPane.OK_CANCEL_OPTION);
+            if (this.result == JOptionPane.OK_OPTION) {
+                userName = name.getText();
+                initialMass = Double.parseDouble(initial.getText());
+                finalDesiredMass = Double.parseDouble(goal.getText());
+                try {
+                    GUI.setUser(new User(userName, initialMass, finalDesiredMass));
+                } catch (IncorrectInputException e) {
+                    inputErrorDialog();
+                }
+            // we call try here, because we're calling a method
+                newUser = GUI.getUser();
+                Records record = new Records((newUser));
+                record.addDailyRecord(new DailyRecord(initialMass));
+                GUI.setUserRecords(record);
+                userRecords = GUI.getUserRecords();
+                actionPerformed();
+            }
         }
+    }
 
+    // EFFECTS: Performs a pop-up where if the goal is greater than the initial mass then
+    //          reject that option and say a message to try again.
+    private void inputErrorDialog() {
+        JOptionPane.showMessageDialog(this,
+                "Sorry, your goal needs to be less than "
+                       + "your initial mass. Please try again!",
+                "Inane Error", JOptionPane.ERROR_MESSAGE);
     }
 
     // MODIFIES: This.
-    // EFFECTS: Performs either two pop-ups. One is if the goal is greater than the initial mass then
-    //          reject that option and say a message to try again. The other is that if everything
-    //          is inputted correctly, then create a pop-up window of how many days it will take to reach their goal.
+    // EFFECTS: Performs a pop-up where if everything is inputted correctly,
+    // then create a pop-up window of how many days it will take to reach their goal.
     public void actionPerformed() {
-        if (result == JOptionPane.OK_OPTION && finalDesiredMass >= initialMass) {
-            JOptionPane.showMessageDialog(this,
-                    "Sorry, your goal needs to be less than "
-                            + "your initial mass. Please try again!",
-                    "Inane Error", JOptionPane.ERROR_MESSAGE);
-        } else if (result == JOptionPane.OK_OPTION) {
+        if (result == JOptionPane.OK_OPTION) {
             JOptionPane.showMessageDialog(this,
                     "According to Mayo Clinic, it is recommended"
                             + " to lose a maximum 2 lbs per week (or ~0.29 lbs a day). "
@@ -104,3 +115,8 @@ public class CreateProfile extends JFrame {
 
 
 }
+
+// create field guestuser
+// assign guestuser field to start of program (main)
+// (while GUI.getUser == guestUser)
+// keepgoing;

@@ -108,13 +108,18 @@ public class WeightPacerApp {
         while (true) {
             System.out.println("Please insert your final desired mass in lbs");
             finalDesiredMass = input.nextDouble();
-            if (finalDesiredMass < initialMass) {
+            try {
+                this.user = new User(name, initialMass, finalDesiredMass);
                 break;
-            } else {
+            } catch (IncorrectInputException e) {
                 System.out.println("You need to have a final desired mass that's lower than the initial mass");
             }
+//            if (finalDesiredMass < initialMass) {
+//                break;
+//            } else {
+//                System.out.println("You need to have a final desired mass that's lower than the initial mass");
+//            }
         }
-        this.user = new User(name, initialMass, finalDesiredMass);
         this.userRecords = new Records(this.user);
 
         System.out.println("Using your given data, according to health experts, it is recommended"
@@ -149,6 +154,8 @@ public class WeightPacerApp {
             System.out.println("Loaded " + userRecords.getRecordsList() + "from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
+        } catch (IncorrectInputException e) {
+            System.out.println(e.getMessage());
         }
     }
 
