@@ -74,24 +74,24 @@ public class GUI extends JFrame {
         jsonReader = new JsonReader(JSON_STORE);
     }
 
-    // EFFECTS: Sets
-    public static void setUserRecords(Records records) {
-        GUI.userRecords = records;
-    }
-
     // EFFECTS: Fetches the latest UserRecords that's been saved within the project.
     public static Records getUserRecords() {
         return GUI.userRecords;
     }
 
-    // EFFECTS:
-    public static void setUser(User user) {
-        GUI.user = user;
+    // EFFECTS: Sets userRecords.
+    public static void setUserRecords(Records records) {
+        GUI.userRecords = records;
     }
 
-    // EFFECTS:
+    // EFFECTS: Fetches the latest User that's been saved within the project.
     public static User getUser() {
         return GUI.user;
+    }
+
+    // EFFECTS: Sets user.
+    public static void setUser(User user) {
+        GUI.user = user;
     }
 
     // MODIFIES: This.

@@ -11,11 +11,11 @@ public class Analytics extends JFrame {
     private JPanel panel;
 
     private Integer fetchCurrentMass;
-    private DailyRecord mostRecentDailyRecord;
     private Double currentMassInDouble;
     private Double finalDesiredMass;
 
     private Records userRecords;
+    private DailyRecord mostRecentDailyRecord;
 
     // EFFECTS: Constructs an analytics popup where you get your
     // current trajectory given your most recent inputted mass.

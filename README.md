@@ -49,3 +49,24 @@ the bold and italic fonts correctly but they will appear correctly on GitHub.
 // (first focus on how everything works then include people)
 // class called daily record --> has weight, day, etc. 
 // class called records (record book)
+
+
+
+##Phase 4: Task 2
+Test and design a class in your model package that is robust.  
+You must have at least one method that throws a checked exception.  
+You must have one test for the case where the exception is expected 
+and another where the exception is not expected.
+
+- The class that has been made robust is my ***user*** class and throws a checked exception.
+- I throw an IncorrectInputException if the user inputs a final desired mass that's greater or equal to initial mass.
+
+##Phase 4: Task 3
+What I could have done to refactor and streamline my code is that I could have had my IntroSound class be within the 
+GUI instead of it being its own class. Especially since I am only playing one sound. Otherwise, I tried to split all
+functionalities into their own classes to the best of my ability so I do not think I could have done much to 
+refactor my classes but I could have worked on some other areas, namely my fields.
+
+My field naming has been somewhat inconsistent throughout my program and the first thing I would do to increase the
+readability of my project is to rename most of my fields to the same thing, unless it really needed to be 
+named as something else.

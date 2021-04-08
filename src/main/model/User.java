@@ -15,8 +15,6 @@ public class User implements Writable {
     private int trajectory; // how long it is recommended to lose this weight
     //private Records r;      // list of daily records plus initial mass for person
 
-    // REQUIRES: personName is a non-zero length and
-    //           finalDesiredMass needs to be lower than initialMass
     // EFFECTS: Sets up a user's information containing their name, their initial mass in pounds
     public User(String personName, double initialMass, double finalDesiredMass) throws IncorrectInputException {
         name = personName;

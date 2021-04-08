@@ -17,12 +17,12 @@ public class CreateProfile extends JFrame {
     JTextField goal;
 
     private User newUser;
+    private User guestUser;
     private Records userRecords;
+
     private String userName;
     private Double initialMass;
     private Double finalDesiredMass;
-
-    private User guestUser;
 
     private Integer result;
 

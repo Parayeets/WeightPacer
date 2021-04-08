@@ -3,10 +3,6 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.lang.StrictMath.*;
-
-import model.User;
-
 public class DailyRecord implements Writable {
     public static final double RECOMMENDED_WEIGHT_LOSS_PER_DAY = 0.285142857; //(lbs/day) and equates to ~2 lbs a week
 

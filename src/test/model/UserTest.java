@@ -12,12 +12,25 @@ public class UserTest {
     private User testUser;
     private User testUserTwo;
     private User testUserThree;
+    private User testUserFour;
 
     @BeforeEach
-    void runBefore() throws IncorrectInputException {
-        testUser = new User("Samantha", 165.0, 145.0);
-        testUserTwo = new User("Navid", 210.0, 177.5);
-        testUserThree = new User("Rohan", 294.1, 200.0);
+    void runBefore() {
+        try {
+            testUser = new User("Samantha", 165.0, 145.0);
+            testUserTwo = new User("Navid", 210.0, 177.5);
+            testUserThree = new User("Rohan", 294.1, 200.0);
+        } catch (IncorrectInputException e) {
+            fail("Exception shouldn't be thrown");
+        }
+
+        try {
+            testUserFour = new User("Karen", 96.5, 100.0);
+            fail("Exception should be thrown");
+        } catch (IncorrectInputException e) {
+            //pass
+        }
+
 
     }
 
@@ -35,6 +48,14 @@ public class UserTest {
         assertEquals("Rohan", testUserThree.getName());
         assertEquals(294.1, testUserThree.getInitialMass());
         assertEquals(200.0, testUserThree.getFinalDesiredMass());
+
+        try {
+            assertEquals("Karen", testUserFour.getName());
+            assertEquals(96.5, testUserFour.getInitialMass());
+            assertEquals(100.0, testUserFour.getFinalDesiredMass());
+        } catch (NullPointerException e) {
+            //pass
+        }
 
     }
 
@@ -59,6 +80,19 @@ public class UserTest {
     void testThreeInitialTrajectoryTowardsGoal() {
         assertEquals(Math.round(94 / 0.285142857), testUserThree.initialTrajectoryTowardsGoal(294.1,
                 200.0));
+    }
+
+    // This test takes a user who goes against the purpose of the program and has a final desired mass that's higher
+    // or equal to the initial mass. So it would ask the user to put their inputs again, but in the meantime, it would
+    // put in a dummy value by the name of Guest, which has an initial mass of 1 lb and a final mass of 0 lb.
+    @Test
+    void testInvalidTrajectoryTowardsGoal() {
+        try {
+            assertEquals(Math.round(1/ 0.285142857), testUserFour.initialTrajectoryTowardsGoal(96.5,
+                    100.0));
+        } catch (NullPointerException e) {
+            //pass
+        }
     }
 
     @Test

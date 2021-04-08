@@ -5,8 +5,6 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
-import model.*;
-
 
 public class Records implements Writable {
 
